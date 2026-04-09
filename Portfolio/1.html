@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html>
+   
+   <head>
+    <title>flipcard</title>
+     <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+     body{
+       background: black;
+     }
+     h1{
+     background: linear-gradient(180deg, red 50%, white);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-shadow: 0 2.5px 5px gray;
+      padding: 40px 0 5px 0;
+     }
+
+     .deck{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+     }
+
+    .card{
+width:180px;
+height:252px;
+perspective:1000px;
+cursor: pointer;
+box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+}
+
+.inner-card{
+position:relative;
+width:100%;
+height:100%;
+transition: all 0.3s ease;
+transform-style: preserve-3d;
+}
+
+.card:hover .inner-card{
+transform: rotateY(180deg);
+
+}
+.card:hover{
+  transform: translateY(-10px);
+box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+.front,.back{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+display:flex;
+border-radius:10px;
+
+}
+
+.front{
+  transform: rotateY(180deg);
+background: white;
+color: rgb(241, 14, 14);
+flex-direction: column;
+justify-content: space-between;
+backface-visibility:hidden;
+
+}
+
+.back{
+
+
+background:linear-gradient(45deg,black,red,gray);
+color: white;
+font-size: 60px;
+backface-visibility:hidden;
+justify-content: center; 
+align-items: center;
+}
+.top{
+  display: flex;
+  flex-direction: column;
+  top: 2px;
+  left: 5px;
+  position: absolute;
+  
+}
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  place-items: center;
+  width: 70%;
+  height: 65%;
+  gap: 20px;
+  top: 45%;
+}
+span{
+  text-align: center;
+  place-items: center;
+  
+}
+.bottom{
+ bottom: 5px;
+right: 8px;
+display: flex;
+flex-direction: column;
+transform: rotate(180deg);
+ position: absolute;
+ 
+}
+.top,.bottom{
+    font-size:1.8rem;
+
+}
+.rotate{
+  transform: rotate(180deg);
+  display: inline-block;
+}
+@media(max-width: 600px){
+  .card{
+    width: 150px;
+    height: 225px;
+  }
+}
+.middle.single{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.middle.seven {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr; /* ৪ rows */
+  gap: 5px;
+  width: 80%;
+  height: 80%;
+  place-items: center;
+}
+.middle.eight{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr; /* ৪ rows */
+  gap: 0px;
+  width: 80%;
+   height: 45%; /* 100% থেকে কমান */
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.middle.nine{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr; /* 5 rows */
+  gap: 0px;
+  width: 90%;
+  height: 40%; /* 100% থেকে কমান */
+  top: 22%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.middle.ten{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; /* 5 rows */
+  gap: 0px;
+  width: 90%;
+  height: 85%; /* 100% থেকে কমান */
+  top: 49%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+}
+
+/*.middle:not(.single):not(.seven){
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:1fr 1fr 1fr 1fr; 
+}*/
+/*.middle.face {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.middle.face img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 2px solid #333;
+  border-radius: 8px;
+}*/
+
+.black{
+  background-color: white;
+  color: black;
+}
+
+.middle.face,
+.middle.queen,
+.middle.king,
+.middle.face-black,
+.middle.queen-black,
+.middle.king-black,
+.middle.diamond-jack,
+.middle.diamond-queen,
+.middle.diamond-king,
+.middle.club-jack,
+.middle.club-queen,
+.middle.club-king{
+    background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;    /* 180% ছিল সমস্যা */
+  height: 100%;
+  top: 50%;  /* 252% ছিল সমস্যা */
+  margin: 0;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid #333;
+}
+
+.middle.face{background-image: url("jack-red.jpg");}
+.middle.queen{ background-image: url("queen-red.jpg");}
+.middle.king{background-image: url("king-red.avif");}
+.middle.face-black{ background-image: url("jack.jpg");}
+.middle.queen-black{ background-image: url("queen.svg");}
+.middle.king-black{background-image: url("king.jpg");}
+.middle.diamond-jack{background-image: url("jack-of-diamond.jpg");}
+.middle.diamond-queen{ background-image: url("queen-of-diamond.jpg");}
+.middle.diamond-king{  background-image: url("king-of-diamond.jpeg");}
+.middle.club-jack{background-image: url("jack-of-club.webp");}
+.middle.club-queen{ background-image: url("queen-of-club.jpg");}
+.middle.club-king{background-image: url("king-of-club.jpg");}
+
+.subtitle{
+ background: linear-gradient(90deg, orange, #ff4d4d, #ffd700);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 700;
+opacity:0.8;
+margin: 0 auto 20px auto;
+text-align: center;
+}
+
+     </style>
+   </head>
+   <body>
+    <h1>Playing Cards for real</h1>
+    
+<p class="subtitle">Hover or click a card to view details</p>
+    
+    <div class="deck">
+      
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>A</span>
+           <span>♥</span>
+           </div>
+           <div class="middle single">
+  <span>♥</span>
+           </div>
+           <div class="bottom">
+           <span>A</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>2</span>
+           <span>♥</span>
+           </div>
+           <div class="middle">
+  <span style="grid-column: 1 / span 2; grid-row: 1">♠</span>
+    <span class="rotate" style="grid-column: 1 / span 2; grid-row: 3;">♠</span>
+</div>
+           <div class="bottom">
+           <span>2</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>3</span>
+           <span>♥</span>
+           </div>
+           <div class="middle">
+  <span style="grid-column: 1 / span 2;">♥</span>
+  <span style="grid-column: 1 / span 2;">♥</span>
+  <span class="rotate" style="grid-column: 1 / span 2;">♥</span>
+</div>
+           <div class="bottom">
+           <span>3</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+<div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>4</span>
+           <span>♥</span>
+           </div>
+           <div class="middle">
+  <span>♥</span>
+  <span>♥</span>
+  <span class="rotate" style="grid-row: 3;">♥</span>
+  <span class="rotate" style="grid-row: 3;">♥</span>
+</div>
+           <div class="bottom">
+           <span>4</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>5</span>
+           <span>♥</span>
+           </div>
+           <div class="middle">
+  <span>♥</span>
+  <span>♥</span>
+  <span style="grid-column: 1 / span 2;">♠</span>
+  <span class="rotate">♥</span>
+  <span class="rotate">♥</span>
+</div>
+           <div class="bottom">
+           <span>5</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>6</span>
+           <span>♥</span>
+           </div>
+           <div class="middle">
+  <span>♥</span>
+  <span>♥</span>
+  <span>♥</span>
+  <span>♥</span>
+  <span class="rotate">♥</span>
+  <span class="rotate">♥</span>
+</div>
+           <div class="bottom">
+           <span>6</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>7</span>
+           <span>♥</span>
+           </div>
+           <div class="middle seven">
+  <span>♥</span>
+  <span>♥</span>
+  <span style="grid-column: 1/span 2;">♠</span>
+  <span>♥</span>
+  <span>♥</span>
+  <span class="rotate">♥</span>
+  <span class="rotate">♥</span>
+</div>
+           <div class="bottom">
+           <span>7</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>8</span>
+           <span>♥</span>
+           </div>
+           <div class="middle eight">
+  <span>♥</span>
+  <span>♥</span>
+  <span style="grid-column: 1/span 2; grid-row:2;">♥</span>
+  <span>♥</span>
+  <span>♥</span>
+  <span class="rotate" style="grid-column: 1/ span 2;">♥</span>
+  <span class="rotate">♥</span>
+  <span class="rotate">♥</span>
+</div>
+           <div class="bottom">
+           <span>8</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>9</span>
+           <span>♥</span>
+           </div>
+           <div class="middle nine">
+  <span>♥</span>
+  <span>♥</span>
+  <span>♥</span>
+  <span>♥</span>
+  <span  style="grid-column: 1/span 2; grid-row: 3;">♥</span>
+  <span class="rotate" style="grid-row: 4;">♥</span>
+  <span class="rotate" style="grid-row: 4;">♥</span>
+  <span class="rotate" style="grid-row: 5;">♥</span>
+  <span class="rotate" style="grid-row: 5;">♥</span>
+</div>
+           <div class="bottom">
+           <span>9</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>10</span>
+           <span>♥</span>
+           </div>
+           <div class="middle ten">
+  <span>♥</span>
+  <span>♥</span>
+  <span style="grid-column:1/span 2; grid-row: 2;">♠</span>
+  <span>♥</span>
+  <span>♥</span>
+ <span class="rotate" style="grid-row: 4;">♥</span>
+  <span class="rotate" style="grid-row: 4;">♥</span>
+  <span class="rotate" style="grid-column:1/span 2; grid-row: 5;">♠</span>
+  <span class="rotate" style="grid-row: 6;">♥</span>
+  <span class="rotate" style="grid-row: 6;">♥</span>
+</div>
+           <div class="bottom">
+           <span>10</span>
+           <span>♥</span>
+           </div>
+         </div>
+         <div class="back">
+           ♥
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+  <div class="inner-card">
+    <div class="front">
+      
+      
+      <div class="middle face"> </div>
+     
+      </div>
+   
+    <div class="back">♥</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="inner-card">
+    <div class="front">
+      
+      
+      <div class="middle queen"> </div>
+     
+      </div>
+   
+    <div class="back">♥</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="inner-card">
+    <div class="front">
+      
+      
+      <div class="middle king"> </div>
+     
+      </div>
+   
+    <div class="back">♥</div>
+  </div>
+</div>
+
+
+
+<div class="card red">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>A</span>
+           <span>♠</span>
+           </div>
+           <div class="middle single">
+  <span>♠</span>
+           </div>
+           <div class="bottom">
+           <span>A</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>2</span>
+           <span>♠</span>
+           </div>
+           <div class="middle">
+  <span style="grid-column: 1 / span 2; grid-row: 1">♠</span>
+    <span class="rotate" style="grid-column: 1 / span 2; grid-row: 3;">♠</span>
+</div>
+           <div class="bottom">
+           <span>2</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>3</span>
+           <span>♠</span>
+           </div>
+           <div class="middle">
+  <span style="grid-column: 1 / span 2;">♠</span>
+  <span style="grid-column: 1 / span 2;">♠</span>
+  <span class="rotate" style="grid-column: 1 / span 2;">♠</span>
+</div>
+           <div class="bottom">
+           <span>3</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+<div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>4</span>
+           <span>♠</span>
+           </div>
+           <div class="middle">
+  <span>♠</span>
+  <span>♠</span>
+  <span class="rotate" style="grid-row: 3;">♠</span>
+  <span class="rotate" style="grid-row: 3;">♠</span>
+</div>
+           <div class="bottom">
+           <span>4</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>5</span>
+           <span>♠</span>
+           </div>
+           <div class="middle">
+  <span>♠</span>
+  <span>♠</span>
+  <span style="grid-column: 1 / span 2;">♠</span>
+  <span class="rotate">♠</span>
+  <span class="rotate">♠</span>
+</div>
+           <div class="bottom">
+           <span>5</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>6</span>
+           <span>♠</span>
+           </div>
+           <div class="middle">
+  <span>♠</span>
+  <span>♠</span>
+  <span>♠</span>
+  <span>♠</span>
+  <span class="rotate">♠</span>
+  <span class="rotate">♠</span>
+</div>
+           <div class="bottom">
+           <span>6</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>7</span>
+           <span>♠</span>
+           </div>
+           <div class="middle seven">
+  <span>♠</span>
+  <span>♠</span>
+  <span style="grid-column: 1/span 2;">♠</span>
+  <span>♠</span>
+  <span>♠</span>
+  <span class="rotate">♠</span>
+  <span class="rotate">♠</span>
+</div>
+           <div class="bottom">
+           <span>7</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>8</span>
+           <span>♠</span>
+           </div>
+           <div class="middle eight">
+  <span>♠</span>
+  <span>♠</span>
+  <span style="grid-column: 1/span 2; grid-row:2;">♠</span>
+  <span>♠</span>
+  <span>♠</span>
+  <span class="rotate" style="grid-column: 1/ span 2;">♠</span>
+  <span class="rotate">♠</span>
+  <span class="rotate">♠</span>
+</div>
+           <div class="bottom">
+           <span>8</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>9</span>
+           <span>♠</span>
+           </div>
+           <div class="middle nine">
+  <span>♠</span>
+  <span>♠</span>
+  <span>♠</span>
+  <span>♠</span>
+  <span  style="grid-column: 1/span 2; grid-row: 3;">♠</span>
+  <span class="rotate" style="grid-row: 4;">♠</span>
+  <span class="rotate" style="grid-row: 4;">♠</span>
+  <span class="rotate" style="grid-row: 5;">♠</span>
+  <span class="rotate" style="grid-row: 5;">♠</span>
+</div>
+           <div class="bottom">
+           <span>9</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>10</span>
+           <span>♠</span>
+           </div>
+           <div class="middle ten">
+  <span>♠</span>
+  <span>♠</span>
+  <span style="grid-column:1/span 2; grid-row: 2;">♠</span>
+  <span>♠</span>
+  <span>♠</span>
+ <span class="rotate" style="grid-row: 4;">♠</span>
+  <span class="rotate" style="grid-row: 4;">♠</span>
+  <span class="rotate" style="grid-column:1/span 2; grid-row: 5;">♠</span>
+  <span class="rotate" style="grid-row: 6;">♠</span>
+  <span class="rotate" style="grid-row: 6;">♠</span>
+</div>
+           <div class="bottom">
+           <span>10</span>
+           <span>♠</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♠
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+  <div class="inner-card">
+    <div class="front black">
+      
+      
+      <div class="middle face-black"> </div>
+     
+      </div>
+   
+    <div class="back white">♠</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="inner-card">
+    <div class="front black">
+      
+      
+      <div class="middle queen-black"> </div>
+     
+      </div>
+   
+    <div class="back white">♠</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="inner-card">
+    <div class="front black">
+      
+      
+      <div class="middle king-black"> </div>
+     
+      </div>
+   
+    <div class="back white">♠</div>
+  </div>
+</div>
+
+
+<div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>A</span>
+           <span>♦</span>
+           </div>
+           <div class="middle single">
+  <span>♦</span>
+           </div>
+           <div class="bottom">
+           <span>A</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>2</span>
+           <span>♦</span>
+           </div>
+           <div class="middle">
+  <span style="grid-column: 1 / span 2; grid-row: 1">♦</span>
+    <span class="rotate" style="grid-column: 1 / span 2; grid-row: 3;">♠</span>
+</div>
+           <div class="bottom">
+           <span>2</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>3</span>
+           <span>♦</span>
+           </div>
+           <div class="middle">
+  <span style="grid-column: 1 / span 2;">♦</span>
+  <span style="grid-column: 1 / span 2;">♦</span>
+  <span class="rotate" style="grid-column: 1 / span 2;">♦</span>
+</div>
+           <div class="bottom">
+           <span>3</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+<div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>4</span>
+           <span>♦</span>
+           </div>
+           <div class="middle">
+  <span>♦</span>
+  <span>♦</span>
+  <span class="rotate" style="grid-row: 3;">♦</span>
+  <span class="rotate" style="grid-row: 3;">♦</span>
+</div>
+           <div class="bottom">
+           <span>4</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>5</span>
+           <span>♦</span>
+           </div>
+           <div class="middle">
+  <span>♦</span>
+  <span>♦</span>
+  <span style="grid-column: 1 / span 2;">♦</span>
+  <span class="rotate">♦</span>
+  <span class="rotate">♦</span>
+</div>
+           <div class="bottom">
+           <span>5</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>6</span>
+           <span>♦</span>
+           </div>
+           <div class="middle">
+  <span>♦</span>
+  <span>♦</span>
+  <span>♦</span>
+  <span>♦</span>
+  <span class="rotate">♦</span>
+  <span class="rotate">♦</span>
+</div>
+           <div class="bottom">
+           <span>6</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>7</span>
+           <span>♦</span>
+           </div>
+           <div class="middle seven">
+  <span>♦</span>
+  <span>♦</span>
+  <span style="grid-column: 1/span 2;">♦</span>
+  <span>♦</span>
+  <span>♦</span>
+  <span class="rotate">♦</span>
+  <span class="rotate">♦</span>
+</div>
+           <div class="bottom">
+           <span>7</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>8</span>
+           <span>♦</span>
+           </div>
+           <div class="middle eight">
+  <span>♦</span>
+  <span>♦</span>
+  <span style="grid-column: 1/span 2; grid-row:2;">♦</span>
+  <span>♦</span>
+  <span>♦</span>
+  <span class="rotate" style="grid-column: 1/ span 2;">♦</span>
+  <span class="rotate">♦</span>
+  <span class="rotate">♦</span>
+</div>
+           <div class="bottom">
+           <span>8</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>9</span>
+           <span>♦</span>
+           </div>
+           <div class="middle nine">
+  <span>♦</span>
+  <span>♦</span>
+  <span>♦</span>
+  <span>♦</span>
+  <span  style="grid-column: 1/span 2; grid-row: 3;">♦</span>
+  <span class="rotate" style="grid-row: 4;">♦</span>
+  <span class="rotate" style="grid-row: 4;">♦</span>
+  <span class="rotate" style="grid-row: 5;">♦</span>
+  <span class="rotate" style="grid-row: 5;">♦</span>
+</div>
+           <div class="bottom">
+           <span>9</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front">
+           <div class="top">
+           <span>10</span>
+           <span>♦</span>
+           </div>
+           <div class="middle ten">
+  <span>♦</span>
+  <span>♦</span>
+  <span style="grid-column:1/span 2; grid-row: 2;">♦</span>
+  <span>♦</span>
+  <span>♦</span>
+ <span class="rotate" style="grid-row: 4;">♦</span>
+  <span class="rotate" style="grid-row: 4;">♦</span>
+  <span class="rotate" style="grid-column:1/span 2; grid-row: 5;">♦</span>
+  <span class="rotate" style="grid-row: 6;">♦</span>
+  <span class="rotate" style="grid-row: 6;">♦</span>
+</div>
+           <div class="bottom">
+           <span>10</span>
+           <span>♦</span>
+           </div>
+         </div>
+         <div class="back">
+           ♦
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+  <div class="inner-card">
+    <div class="front">
+      
+      
+      <div class="middle diamond-jack"> </div>
+     
+      </div>
+   
+    <div class="back">♦</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="inner-card">
+    <div class="front">
+      
+      
+      <div class="middle diamond-queen"> </div>
+     
+      </div>
+   
+    <div class="back">♦</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="inner-card">
+    <div class="front">
+      
+      
+      <div class="middle diamond-king"> </div>
+     
+      </div>
+   
+    <div class="back">♦</div>
+  </div>
+</div>
+
+
+<div class="card red">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>A</span>
+           <span>♣</span>
+           </div>
+           <div class="middle single">
+  <span>♣</span>
+           </div>
+           <div class="bottom">
+           <span>A</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>2</span>
+           <span>♣</span>
+           </div>
+           <div class="middle">
+  <span style="grid-column: 1 / span 2; grid-row: 1">♣</span>
+    <span class="rotate" style="grid-column: 1 / span 2; grid-row: 3;">♠</span>
+</div>
+           <div class="bottom">
+           <span>2</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>3</span>
+           <span>♣</span>
+           </div>
+           <div class="middle">
+  <span style="grid-column: 1 / span 2;">♣</span>
+  <span style="grid-column: 1 / span 2;">♣</span>
+  <span class="rotate" style="grid-column: 1 / span 2;">♣</span>
+</div>
+           <div class="bottom">
+           <span>3</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+<div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>4</span>
+           <span>♣</span>
+           </div>
+           <div class="middle">
+  <span>♣</span>
+  <span>♣</span>
+  <span class="rotate" style="grid-row: 3;">♣</span>
+  <span class="rotate" style="grid-row: 3;">♣</span>
+</div>
+           <div class="bottom">
+           <span>4</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>5</span>
+           <span>♣</span>
+           </div>
+           <div class="middle">
+  <span>♣</span>
+  <span>♣</span>
+  <span style="grid-column: 1 / span 2;">♣</span>
+  <span class="rotate">♣</span>
+  <span class="rotate">♣</span>
+</div>
+           <div class="bottom">
+           <span>5</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>6</span>
+           <span>♣</span>
+           </div>
+           <div class="middle">
+  <span>♣</span>
+  <span>♣</span>
+  <span>♣</span>
+  <span>♣</span>
+  <span class="rotate">♣</span>
+  <span class="rotate">♣</span>
+</div>
+           <div class="bottom">
+           <span>6</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>7</span>
+           <span>♣</span>
+           </div>
+           <div class="middle seven">
+  <span>♣</span>
+  <span>♣</span>
+  <span style="grid-column: 1/span 2;">♣</span>
+  <span>♣</span>
+  <span>♣</span>
+  <span class="rotate">♣</span>
+  <span class="rotate">♣</span>
+</div>
+           <div class="bottom">
+           <span>7</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>8</span>
+           <span>♣</span>
+           </div>
+           <div class="middle eight">
+  <span>♣</span>
+  <span>♣</span>
+  <span style="grid-column: 1/span 2; grid-row:2;">♣</span>
+  <span>♣</span>
+  <span>♣</span>
+  <span class="rotate" style="grid-column: 1/ span 2;">♣</span>
+  <span class="rotate">♣</span>
+  <span class="rotate">♣</span>
+</div>
+           <div class="bottom">
+           <span>8</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>9</span>
+           <span>♣</span>
+           </div>
+           <div class="middle nine">
+  <span>♣</span>
+  <span>♣</span>
+  <span>♣</span>
+  <span>♣</span>
+  <span  style="grid-column: 1/span 2; grid-row: 3;">♣</span>
+  <span class="rotate" style="grid-row: 4;">♣</span>
+  <span class="rotate" style="grid-row: 4;">♣</span>
+  <span class="rotate" style="grid-row: 5;">♣</span>
+  <span class="rotate" style="grid-row: 5;">♣</span>
+</div>
+           <div class="bottom">
+           <span>9</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+      <div class="card">
+       <div class="inner-card">
+         <div class="front black">
+           <div class="top">
+           <span>10</span>
+           <span>♣</span>
+           </div>
+           <div class="middle ten">
+  <span>♣</span>
+  <span>♣</span>
+  <span style="grid-column:1/span 2; grid-row: 2;">♣</span>
+  <span>♣</span>
+  <span>♣</span>
+ <span class="rotate" style="grid-row: 4;">♣</span>
+  <span class="rotate" style="grid-row: 4;">♣</span>
+  <span class="rotate" style="grid-column:1/span 2; grid-row: 5;">♣</span>
+  <span class="rotate" style="grid-row: 6;">♣</span>
+  <span class="rotate" style="grid-row: 6;">♣</span>
+</div>
+           <div class="bottom">
+           <span>10</span>
+           <span>♣</span>
+           </div>
+         </div>
+         <div class="back white">
+           ♣
+         </div>
+       </div>
+     </div>
+
+     <div class="card">
+  <div class="inner-card">
+    <div class="front black">
+      
+      
+      <div class="middle club-jack"> </div>
+     
+      </div>
+   
+    <div class="back white">♣</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="inner-card">
+    <div class="front black">
+      
+      
+      <div class="middle club-queen"> </div>
+     
+      </div>
+   
+    <div class="back white">♣</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="inner-card">
+    <div class="front black">
+      
+      
+      <div class="middle club-king"> </div>
+     
+      </div>
+   
+    <div class="back white">♣</div>
+  </div>
+</div>
+
+
+</div>
+   </body>
+</html>

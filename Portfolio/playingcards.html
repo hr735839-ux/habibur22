@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playing Cards</title>
+
+<style>
+
+#playing-cards{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:30px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.deck{
+  height:300px;
+  width:200px;
+  perspective:1000px;
+ 
+  
+}
+
+.card{
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  transition:0.6s ease;
+  transform-origin: center center;
+  
+}
+
+.deck:hover .card{
+  transform: rotateY(180deg);
+}
+
+.front,.back{
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:10px;
+  backface-visibility:hidden;
+  display:flex;
+  justify-content:space-between;
+   /*padding:10px;*/
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+
+.front{
+  background:white;
+}
+
+.back{
+  background:linear-gradient(45deg,black,red);
+  color:white;
+  justify-content:center;
+  align-items:center;
+  font-size:50px;
+  transform: rotateY(180deg);
+}
+
+.left{
+  display:flex;
+  flex-direction:column;
+  font-size:30px;
+  top: 5px;
+  left: 8px;
+  position: absolute;
+  
+}
+
+.middle{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr 1fr;
+  font-size:40px;
+  align-items:center;
+  justify-items:center;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.right{
+  display:flex;
+  flex-direction:column;
+  font-size:30px;
+  transform:rotate(180deg);
+  bottom: 5px;
+  right: 8px;
+  position: absolute;
+}
+
+.red span{
+  color:red;
+}
+
+.black span{
+  color:black;
+}
+
+.deg{
+  transform:rotate(180deg);
+}
+
+h1{
+  text-align:center;
+  font-size:40px;
+  background:linear-gradient(360deg, red, rgb(146, 105, 105), yellow);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Playing Cards</h1>
+
+<main id="playing-cards">
+
+<div class="deck">
+<div class="card red">
+
+<div class="front">
+
+<div class="left">
+<span>A</span>
+<span>♥</span>
+</div>
+
+<div class="middle">
+<span style="grid-column:1/span 2">♥</span>
+<span class="deg" style="grid-column:1/span 2; grid-row:3">♥</span>
+</div>
+
+<div class="right">
+<span>A</span>
+<span>♥</span>
+</div>
+
+</div>
+
+<div class="back">♥</div>
+
+</div>
+</div>
+
+
+<div class="deck">
+<div class="card black">
+
+<div class="front">
+
+<div class="left">
+<span>2</span>
+<span>♣</span>
+</div>
+
+<div class="middle">
+<span style="grid-column:1/span 2">♣</span>
+<span class="deg" style="grid-column:1/span 2; grid-row:3">♣</span>
+</div>
+
+<div class="right">
+<span>2</span>
+<span>♣</span>
+</div>
+
+</div>
+
+<div class="back">♣</div>
+
+</div>
+</div>
+
+
+<div class="deck">
+<div class="card red">
+
+<div class="front">
+
+<div class="left">
+<span>3</span>
+<span>♦</span>
+</div>
+
+<div class="middle">
+<span style="grid-column: 1/span2; grid-row: 1;">♦</span>
+
+<span style="grid-column: 1/span2; grid-row: 2;">♦</span>
+<span class="deg" style="grid-column: 1/span2; grid-row: 3;">♦</span>
+</div>
+
+<div class="right">
+<span>3</span>
+<span>♦</span>
+</div>
+
+</div>
+
+<div class="back">♦</div>
+
+</div>
+</div>
+
+<div class="deck">
+<div class="card black">
+
+<div class="front">
+
+<div class="left">
+<span>3</span>
+<span>♦</span>
+</div>
+
+<div class="middle">
+<span class="deg" style="grid-row: 1;">♠</span>
+<span class="deg" style="grid-row: 1;">♠</span>
+
+<span  style="grid-row: 3;">♠</span>
+<span  style="grid-row: 3;">♠</span>
+</div>
+
+<div class="right">
+<span>3</span>
+<span>♦</span>
+</div>
+
+</div>
+
+<div class="back">♦</div>
+
+</div>
+</div>
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+*{
+padding:5px 20px;
+}
+
+.title{
+    background: linear-gradient(180deg, 
+    #FF1744 0%,      /* Neon Pink */
+    #FF5722 25%,     /* Vibrant Orange */
+    #FFEB3B 50%,     /* Bright Yellow */
+    #FF9800 75%,     /* Golden Orange */
+    #F50057 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+margin-bottom:40px;
+text-align: center;
+}
+
+.pricing-container{
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+}
+
+.pricing-card{
+background:#fff9f9;
+border:1px solid #333;
+padding:30px 20px;
+border-radius:12px;
+width:250px;
+transition:0.3s ease;
+display: inline-block;
+text-align: center;
+
+}
+
+.pricing-card:hover{
+transform:translateY(-10px);
+box-shadow:0 10px 25px rgba(255,165,0,0.3);
+}
+
+.pricing-card h2{
+margin-bottom:10px;
+}
+
+.pricing-card h3{
+color:orange;
+margin-bottom:20px;
+}
+
+.pricing-card ul{
+list-style:none;
+text-align:left;
+margin-bottom:5px;
+}
+
+.pricing-card li{
+margin:5px 0;
+}
+
+.pricing-card button{
+padding:10px 20px;
+border:none;
+background:orange;
+color:white;
+border-radius:6px;
+cursor:pointer;
+ width: fit-content;
+
+}
+
+.pricing-card button:hover{
+background:#ff8c00;
+}
+
+/* Highlight Pro */
+.pro{
+border:2px solid orange;
+transform:scale(1.05);
+} 
+
+/* Responsive */
+@media(max-width:768px){
+
+.pricing-container{
+flex-direction:column;
+align-items:center;
+}
+
+}
+

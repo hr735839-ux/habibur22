@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Application Form</title>
+  <link rel="stylesheet" href="jobapplication.css" />
+</head>
+<body>
+
+  <!-- ✅ Req 1: div.container -->
+  <div class="container">
+
+    <div class="form-header">
+      <h1>Job Application</h1>
+      <p>Fill out the form below to apply for a position</p>
+    </div>
+
+    <!-- ✅ Req 2: form inside div.container -->
+    <form id="application-form" novalidate>
+
+      <!-- ✅ Req 3 & 9: name input with label -->
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="John Doe" required minlength="2" />
+      </div>
+
+      <!-- ✅ Req 4 & 9: email input with label -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="john@example.com" required />
+      </div>
+
+      <!-- ✅ Req 5: select with id="position" -->
+      <div class="form-group">
+        <label for="position">Job Position</label>
+        <select id="position" name="position" required>
+          <option value="">-- Select a Position --</option>
+          <option value="frontend">Frontend Developer</option>
+          <option value="backend">Backend Developer</option>
+          <option value="designer">UI/UX Designer</option>
+          <option value="manager">Project Manager</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <!-- ✅ Req 6 & 7: fieldset.radio-group with radio inputs -->
+      <div class="form-group">
+       
+        <fieldset class="radio-group">
+             <legend class="group-label">Availability</legend>
+          <div class="radio-item">
+            <input type="radio" id="full-time" name="availability" value="full-time" required />
+            <label for="full-time">Full-Time</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="part-time" name="availability" value="part-time" />
+            <label for="part-time">Part-Time</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="contract" name="availability" value="contract" />
+            <label for="contract">Contract</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="remote" name="availability" value="remote" />
+            <label for="remote">Remote</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- ✅ Req 8 & 9: textarea with label -->
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5"
+          placeholder="Tell us about yourself..." required minlength="10"></textarea>
+      </div>
+
+      <!-- ✅ Req 10: submit button -->
+      <button type="submit">Submit Application</button>
+
+    </form>
+  </div>
+
+</body>
+</html>
